@@ -33,6 +33,8 @@ func main() {
 
 	wg := sync.WaitGroup{}
 	wg.Add(chaptersCount)
+
+	// MEMO: 章ごとに節数分のタスクを作成する
 	for chapter := 1; chapter <= chaptersCount; chapter++ {
 		go func(chapter int) {
 			defer wg.Done()
@@ -41,6 +43,7 @@ func main() {
 
 			wg2 := sync.WaitGroup{}
 			wg2.Add(sectionsCount)
+			// MEMO: 節数分のタスクを作成する
 			for section := 1; section <= sectionsCount; section++ {
 				go createTaskFromBook(&wg2, &Book{title, chapter, section}, &TodoistBoard{projectId, sectionId})
 			}
